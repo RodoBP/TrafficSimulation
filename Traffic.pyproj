@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{72c4fbe6-607c-4a8d-8401-118e3b6b334b}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>Tests\test2.py</StartupFile>
+    <SearchPath>TrafficSimulation\</SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId>Global|PythonCore|3.10</InterpreterId>
+    <TestFramework>Pytest</TestFramework>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Tests\test2.py" />
+    <Compile Include="Tests\test.py" />
+    <Compile Include="TrafficSimulation\formulaDG.py" />
+    <Compile Include="TrafficSimulation\road.py" />
+    <Compile Include="TrafficSimulation\semaforo.py" />
+    <Compile Include="TrafficSimulation\simulation.py" />
+    <Compile Include="TrafficSimulation\vehicle.py" />
+    <Compile Include="TrafficSimulation\vehicle_generator.py" />
+    <Compile Include="TrafficSimulation\window.py" />
+    <Compile Include="TrafficSimulation\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tests\" />
+    <Folder Include="TrafficSimulation\" />
+  </ItemGroup>
+  <ItemGroup>
+    <InterpreterReference Include="Global|PythonCore|3.10" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ejemplo.csv" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
