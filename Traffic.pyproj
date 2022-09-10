@@ -39,6 +39,7 @@
     <InterpreterReference Include="Global|PythonCore|3.10" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="anim.json" />
     <Content Include="Ejemplo.csv" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

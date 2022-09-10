@@ -24,53 +24,26 @@ sim.create_roads([
 
     #interseccion
     #10,11
-    (pos[9], pos[5]),(pos[5],pos[1]),
+    (pos[9], (148,98)),((148,98),pos[1]),
     #12,13
-    (pos[2], pos[6]),(pos[6],pos[10]),
+    (pos[2], (300,102)),((300,102),pos[10]),
     #14,15,16
-    (pos[4], pos[5]),(pos[5],pos[6]),(pos[6],pos[7]),
+    (pos[4], (150,100)),((150,100),(302,100)),((302,100),pos[7]),
 
 
 ])
 
-sim.roads[0].vehicles.append(
-  Vehicle({
-    "path": dijstra(0,15)
-  })
-)
+sim.create_vehicle(0,15)
+sim.create_vehicle(0,4)
+sim.create_vehicle(0,7)
 
-sim.roads[0].vehicles.append(
-  Vehicle({
-    "path": dijstra(0,4)
-  })
-)
-
-sim.roads[0].vehicles.append(
-  Vehicle({
-    "path": dijstra(0,7)
-  })
-)
-
-sim.roads[5].vehicles.append(
-  Vehicle({
-    "path": dijstra(5,10)
-  })
-)
-
-sim.roads[5].vehicles.append(
-  Vehicle({
-    "path": dijstra(5,4)
-  })
-)
-
-sim.roads[5].vehicles.append(
-  Vehicle({
-    "path": dijstra(5,14)
-  })
-)
+sim.create_vehicle(5,4)
+sim.create_vehicle(5,2)
+sim.create_vehicle(5,10)
 
 
 sim.create_signal([[10], [14]])
+
 sim.create_signal([[12], [15]])
 
 # Start simulation

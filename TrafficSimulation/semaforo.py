@@ -1,4 +1,8 @@
+import itertools
+
+
 class Semaforo:
+    id_iter = itertools.count() 
     def __init__(self, roads, config={}):
         # Initialize roads
         self.roads = roads
@@ -15,6 +19,7 @@ class Semaforo:
         self.slow_distance = 50
         self.slow_factor = 0.4
         self.stop_distance = 15
+        self.id = next(self.id_iter) + 10
 
         self.current_cycle_index = 0
 

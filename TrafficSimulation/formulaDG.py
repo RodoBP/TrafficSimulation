@@ -13,6 +13,5 @@ def dijstra(start,end):
                     Costo=row[1]["Costo"])
 
     path = list(nx.dijkstra_path(DG, source=start, target=end, weight="Costo"))
-    print(path)
 
     return path

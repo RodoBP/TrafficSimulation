@@ -1,3 +1,4 @@
+import json
 from turtle import position
 import pygame
 from pygame import gfxdraw
@@ -28,6 +29,8 @@ class Window:
         self.mouse_last = (0, 0)
         self.mouse_down = False
 
+        self.step = 0
+
 
     def loop(self, loop=None):
         """Shows a window visualizing the simulation and runs the loop function."""
@@ -45,7 +48,7 @@ class Window:
 
         # Draw loop
         running = True
-        while running:
+        while running and self.step <= 1000:
             # Update simulation
             if loop: loop(self.sim)
 
@@ -83,7 +86,11 @@ class Window:
                         x2, y2 = pygame.mouse.get_pos()
                         self.offset = ((x2-x1)/self.zoom, (y2-y1)/self.zoom)
                 elif event.type == pygame.MOUSEBUTTONUP:
-                    self.mouse_down = False           
+                    self.mouse_down = False 
+            
+            self.step += 1
+        with open("anim.json","w") as outfile:
+            outfile.write(json.dumps(self.sim.anim))
 
     def run(self, steps_per_update=1):
         """Runs the simulation by updating in every loop."""
@@ -280,6 +287,18 @@ class Window:
         x = road.start[0] + cos * vehicle.x 
         y = road.start[1] + sin * vehicle.x 
 
+        agent = {
+                "StepInfo":{
+                    "agentId":vehicle.id,
+                    "stepIndex":self.step,
+                    "time":self.sim.t,
+                    "state": -1,
+                    "positionx":x,
+                    "positiony":y,
+                    }
+                }
+        self.sim.anim["steps"].append(agent)
+
         self.rotated_box((x, y), (l, h), cos=cos, sin=sin, centered=True)
 
     def draw_vehicles(self):
@@ -292,6 +311,7 @@ class Window:
         for signal in self.sim.traffic_signals:
             for i in range(len(signal.roads)):
                 color = (0, 255, 0) if signal.current_cycle[i] else (255, 0, 0)
+                state = 0 if signal.current_cycle[i] else 1
                 for road in signal.roads[i]:
                     a = 0
                     position = (
@@ -303,6 +323,17 @@ class Window:
                         (1, 3),
                         cos=road.angle_cos, sin=road.angle_sin,
                         color=color)
+                    agent = {
+                        "StepInfo":{
+                            "agentId":signal.id,
+                            "stepIndex":self.step,
+                            "time":self.sim.t,
+                            "state": state,
+                            "positionx":position[0],
+                            "positiony":position[1],
+                            }
+                        }
+                    self.sim.anim["steps"].append(agent)
 
     def draw_status(self):
         text_fps = self.text_font.render(f't={self.sim.t:.5}', False, (0, 0, 0))

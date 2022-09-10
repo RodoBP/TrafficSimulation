@@ -1,3 +1,5 @@
+from formulaDG import dijstra
+from vehicle import Vehicle
 from .road import Road
 from copy import deepcopy
 from .vehicle_generator import VehicleGenerator
@@ -39,10 +41,27 @@ class Simulation:
         self.generators.append(gen)
         return gen
 
+    def create_vehicle(self,start,end):
+        v1 = Vehicle({
+                "path": dijstra(start,end)
+              })
+        self.roads[start].vehicles.append(v1)
+        agents = {
+            "id": v1.id,
+            "type": 0
+            }
+        self.anim["agents"].append(agents)
+        return v1
+
     def create_signal(self, roads, config={}):
         roads = [[self.roads[i] for i in road_group] for road_group in roads]
         sig = Semaforo(roads, config)
         self.traffic_signals.append(sig)
+        agents = {
+            "id": sig.id,
+            "type": 1
+            }
+        self.anim["agents"].append(agents)
         return sig
 
     def update(self):
@@ -53,18 +72,6 @@ class Simulation:
         # Add vehicles
         for gen in self.generators:
             gen.update()
-            print(gen.last_added_time)
-            #agent = {
-            #    "StepInfo":{
-            #        "agentId":gen.last_added_time,
-            #        "stepIndex":self.dt,
-            #        "time":self.t,
-            #        "state": -1,
-            #        "positionx":gen.vehicles,
-            #        "positiony":y,
-            #        }
-            #    }
-            #self.anim["steps"].append(agent)
 
         for signal in self.traffic_signals:
             signal.update(self)

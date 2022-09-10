@@ -1,6 +1,9 @@
+from asyncio.windows_events import NULL
+import itertools
 import numpy as np
 
 class Vehicle:
+    id_iter = itertools.count()
     def __init__(self, config={}):
         # Set default configuration
         self.set_default_config()
@@ -12,6 +15,7 @@ class Vehicle:
         # Calculate properties
         self.init_properties()
 
+
     def set_default_config(self):    
         self.l = 4
         self.s0 = 4
@@ -19,6 +23,7 @@ class Vehicle:
         self.v_max = 16.6
         self.a_max = 1.44
         self.b_max = 4.61
+        self.id = next(self.id_iter)
 
         self.path = []
         self.current_road_index = 0
